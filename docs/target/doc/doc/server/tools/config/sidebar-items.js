@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["BackBlazeConfig","Authentication information used to interact with BackBlaze’s storage API."],["Config","Wrapper for all other config variables."],["ProofConfig","The proof standards, update based on the mod tools desired."],["ServerConfig","Server hosting information for mounting the webserver."]]});

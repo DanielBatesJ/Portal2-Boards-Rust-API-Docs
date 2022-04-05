@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["get_chapter_by_name","GET method to return all chapters that match a specific name"],["get_map_ids_by_chapter","GET method for map_ids by chapter."]]});
