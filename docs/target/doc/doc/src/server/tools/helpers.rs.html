@@ -218,7 +218,7 @@
             <span class="macro">bail!</span>(<span class="string">&quot;User does not exist&quot;</span>);
         }
     }
-    <span class="kw">let</span> <span class="ident">cl</span> <span class="op">=</span> <span class="ident">Changelog::get_sp_pb_history</span>(<span class="ident">pool</span>, <span class="ident">profile_number</span>.<span class="ident">clone</span>(), <span class="ident">map_id</span>.<span class="ident">clone</span>()).<span class="kw">await</span>;
+    <span class="kw">let</span> <span class="ident">cl</span> <span class="op">=</span> <span class="ident">Changelog::get_sp_pb_history</span>(<span class="ident">pool</span>, <span class="kw-2">&amp;</span><span class="ident">profile_number</span>, <span class="kw-2">&amp;</span><span class="ident">map_id</span>, <span class="ident">cat_id</span>).<span class="kw">await</span>;
     <span class="kw">let</span> <span class="ident">cl</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">cl</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">x</span>) =&gt; <span class="ident">x</span>,
         <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {

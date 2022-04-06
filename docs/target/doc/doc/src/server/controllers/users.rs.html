@@ -318,7 +318,7 @@
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">res</span>))
     }
     <span class="doccomment">/// Gets a user&#39;s avatar and user_name/board_name (favors board_name)</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_user_data</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">profile_number</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UsersPage</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_user_data</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">profile_number</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UsersPage</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">UsersPage</span><span class="op">&gt;</span>(
             <span class="string">r#&quot;
                 SELECT            

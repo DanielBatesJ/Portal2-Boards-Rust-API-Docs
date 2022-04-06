@@ -176,8 +176,10 @@
 <span id="174">174</span>
 <span id="175">175</span>
 <span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::{
-    <span class="ident">Changelog</span>, <span class="ident">CoopBanned</span>, <span class="ident">CoopBundled</span>, <span class="ident">CoopBundledInsert</span>, <span class="ident">CoopMap</span>, <span class="ident">CoopPreviews</span>, <span class="ident">Opti32</span>,
+    <span class="ident">Changelog</span>, <span class="ident">CoopBanned</span>, <span class="ident">CoopBundled</span>, <span class="ident">CoopBundledInsert</span>, <span class="ident">CoopMap</span>, <span class="ident">CoopPreviews</span>, <span class="ident">OptCatID</span>,
     <span class="ident">ScoreParams</span>,
 };
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::tools::cache</span>::{<span class="ident">read_from_file</span>, <span class="ident">write_to_file</span>, <span class="ident">CacheState</span>};
@@ -236,7 +238,7 @@
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/map/coop/{map_id}&quot;</span>)]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_cooperative_maps</span>(
     <span class="ident">map_id</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">cat_id</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">Opti32</span><span class="op">&gt;</span>,
+    <span class="ident">cat_id</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">OptCatID</span><span class="op">&gt;</span>,
     <span class="ident">config</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">Config</span><span class="op">&gt;</span>,
     <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>,
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
@@ -271,12 +273,14 @@
 <span class="doccomment">///     - `/api/v1/coop/map_banned/47802`</span>
 <span class="doccomment">/// - **Specific Category ID** - Will use the cat_id specified.</span>
 <span class="doccomment">///     - `/api/v1/coop/map_banned/47802?cat_id=40`</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Makes a call to the underlying [CoopBanned::get_coop_banned]</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/coop/map_banned/{map_id}&quot;</span>)]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_banned_scores_coop</span>(
     <span class="ident">map_id</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
     <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>,
-    <span class="ident">params</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">Opti32</span><span class="op">&gt;</span>,
+    <span class="ident">params</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">OptCatID</span><span class="op">&gt;</span>,
 ) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">CoopBanned::get_coop_banned</span>(
         <span class="ident">pool</span>.<span class="ident">get_ref</span>(),

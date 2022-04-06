@@ -104,13 +104,81 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::{<span class="ident">Admin</span>, <span class="ident">AdminLevel</span>, <span class="ident">ChangelogQueryParams</span>, <span class="ident">Users</span>};
 <span class="kw">use</span> <span class="ident">actix_web</span>::{<span class="ident">get</span>, <span class="ident">web</span>, <span class="ident">HttpResponse</span>, <span class="ident">Responder</span>};
 <span class="kw">use</span> <span class="ident">sqlx::PgPool</span>;
 
 <span class="doccomment">/// **GET** method for admin-relevant entiries. Utilizes `ChangelogQueryParrams` as an optional addition to the query</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// **Optional Parameters**: [crate::models::models::ChangelogQueryParams]</span>
+<span class="doccomment">/// **Optional Parameters**: [ChangelogQueryParams]</span>
 <span class="doccomment">/// ## Parameters:</span>
 <span class="doccomment">///    - **limit**           </span>
 <span class="doccomment">///         - The # of max returned results.</span>
@@ -145,6 +213,34 @@
 <span class="doccomment">///     - `/api/v1/admin/changelog?limit-200&amp;last=157604`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Makes a call to the underlying [Admin::get_admin_page]</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">/// ```json</span>
+<span class="doccomment">/// [</span>
+<span class="doccomment">///     {</span>
+<span class="doccomment">///         &quot;id&quot;: 157795,</span>
+<span class="doccomment">///         &quot;timestamp&quot;: &quot;2021-08-25T09:53:11&quot;,</span>
+<span class="doccomment">///         &quot;profile_number&quot;: &quot;76561199114333959&quot;,</span>
+<span class="doccomment">///         &quot;score&quot;: 2273,</span>
+<span class="doccomment">///         &quot;map_id&quot;: &quot;47472&quot;,</span>
+<span class="doccomment">///         &quot;demo_id&quot;: null,</span>
+<span class="doccomment">///         &quot;banned&quot;: true,</span>
+<span class="doccomment">///         &quot;youtube_id&quot;: null,</span>
+<span class="doccomment">///         &quot;previous_id&quot;: null,</span>
+<span class="doccomment">///         &quot;coop_id&quot;: null,</span>
+<span class="doccomment">///         &quot;post_rank&quot;: 1,</span>
+<span class="doccomment">///         &quot;pre_rank&quot;: null,</span>
+<span class="doccomment">///         &quot;submission&quot;: false,</span>
+<span class="doccomment">///         &quot;note&quot;: &quot;Ban Reason - Used Give (Daniel)&quot;,</span>
+<span class="doccomment">///         &quot;category_id&quot;: 34,</span>
+<span class="doccomment">///         &quot;score_delta&quot;: null,</span>
+<span class="doccomment">///         &quot;verified&quot;: false,</span>
+<span class="doccomment">///         &quot;admin_note&quot;: null,</span>
+<span class="doccomment">///         &quot;map_name&quot;: &quot;PotatOS&quot;,</span>
+<span class="doccomment">///         &quot;user_name&quot;: &quot;HackerKnownAsRan&quot;,</span>
+<span class="doccomment">///         &quot;avatar&quot;: &quot;https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/79/79d3fe5839617eb83a9661071ed021dd56ac8a5b_full.jpg&quot;</span>
+<span class="doccomment">///     },...]</span>
+<span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/admin/changelog&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_admin_changelog</span>(
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
@@ -160,6 +256,25 @@
 <span class="doccomment">/// **GET** method for user statistics on total times, banned times and non-verified times.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Does not include any data on users without either a banned, or non-verified time.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Example endpoints:</span>
+<span class="doccomment">///  - **Default**           </span>
+<span class="doccomment">///     - `/api/v1/admin/banned_stats`</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Makes a call to the underlying [Admin::get_user_banned_time_stats]</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">/// ```json</span>
+<span class="doccomment">///[</span>
+<span class="doccomment">///     {</span>
+<span class="doccomment">///         &quot;profile_number&quot;: &quot;76561198039230536&quot;,</span>
+<span class="doccomment">///         &quot;user_name&quot;: &quot;Zypeh&quot;,</span>
+<span class="doccomment">///         &quot;avatar&quot;: &quot;https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/f9/f934276c99d0f970fdcb2d4e1229dde02d778d99_full.jpg&quot;,</span>
+<span class="doccomment">///         &quot;total_runs&quot;: 1954,</span>
+<span class="doccomment">///         &quot;banned_runs&quot;: 64,</span>
+<span class="doccomment">///         &quot;non_verified_runs&quot;: 1</span>
+<span class="doccomment">///     },...]</span>
+<span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/admin/banned_stats&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_banned_stats</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">match</span> <span class="ident">Admin::get_user_banned_time_stats</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>()).<span class="kw">await</span> {
@@ -194,12 +309,33 @@
 <span class="doccomment">///  - **With parameters**   </span>
 <span class="doccomment">///     - `/api/v1/admins?admin-level=2`</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// Makes a call to the underlying [Users::get_all_admins]</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">/// ```json</span>
+<span class="doccomment">/// [</span>
+<span class="doccomment">///     {</span>
+<span class="doccomment">///         &quot;profile_number&quot;: &quot;76561198040982247&quot;,</span>
+<span class="doccomment">///         &quot;user_name&quot;: &quot;Daniel&quot;,</span>
+<span class="doccomment">///         &quot;avatar&quot;: &quot;https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/92/921d9d7402a6e766759bcc0b2ac7b91f1dcf0ad2_full.jpg&quot;</span>
+<span class="doccomment">///     },</span>
+<span class="doccomment">///     {</span>
+<span class="doccomment">///         &quot;profile_number&quot;: &quot;76561198045074889&quot;,</span>
+<span class="doccomment">///         &quot;user_name&quot;: &quot;『 Jonese1234 』&quot;,</span>
+<span class="doccomment">///         &quot;avatar&quot;: &quot;https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/9f/9f6de098624a8f81ba6d2318e1923bdda1c710d6_full.jpg&quot;</span>
+<span class="doccomment">///     },...]</span>
+<span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/admins&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_admin_list</span>(
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
-    <span class="ident">query</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">AdminLevel</span><span class="op">&gt;</span>,
+    <span class="ident">admin_level</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">AdminLevel</span><span class="op">&gt;</span>,
 ) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
-    <span class="kw">match</span> <span class="ident">Users::get_all_admins</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>(), <span class="ident">query</span>.<span class="ident">into_inner</span>().<span class="ident">admin_level</span>.<span class="ident">unwrap_or</span>(<span class="number">1</span>)).<span class="kw">await</span> {
+    <span class="kw">match</span> <span class="ident">Users::get_all_admins</span>(
+        <span class="ident">pool</span>.<span class="ident">get_ref</span>(),
+        <span class="ident">admin_level</span>.<span class="ident">into_inner</span>().<span class="ident">admin_level</span>.<span class="ident">unwrap_or</span>(<span class="number">1</span>),
+    )
+    .<span class="kw">await</span>
+    {
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">res</span>)) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">res</span>),
         <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
             <span class="macro">eprintln!</span>(<span class="string">&quot;Error getting Admins -&gt; {}&quot;</span>, <span class="ident">e</span>);
