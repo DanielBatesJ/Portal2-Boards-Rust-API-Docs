@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["get_default_cat",""]]});
+initSidebarItems({"struct":[["default_category",""]]});

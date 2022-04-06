@@ -420,6 +420,53 @@
 <span id="418">418</span>
 <span id="419">419</span>
 <span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::{
     <span class="ident">Changelog</span>, <span class="ident">HistoryParams</span>, <span class="ident">OptCatID</span>, <span class="ident">ScoreLookup</span>, <span class="ident">ScoreParams</span>, <span class="ident">SpBanned</span>, <span class="ident">SpMap</span>, <span class="ident">SpPbHistory</span>,
     <span class="ident">SpPreviews</span>, <span class="ident">SpRanked</span>, <span class="ident">Users</span>, <span class="ident">UsersPage</span>,
@@ -459,10 +506,7 @@
 <span class="doccomment">///             },...]}]</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/sp&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_singleplayer_preview</span>(
-    <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
-    <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>,
-) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sp</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>, <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="comment">// See if we can utilize the cache</span>
     <span class="kw">let</span> <span class="ident">state_data</span> <span class="op">=</span> <span class="kw-2">&amp;mut</span> <span class="ident">cache</span>.<span class="ident">current_state</span>.<span class="ident">lock</span>().<span class="kw">await</span>;
     <span class="kw">let</span> <span class="ident">is_cached</span> <span class="op">=</span> <span class="ident">state_data</span>.<span class="ident">get_mut</span>(<span class="string">&quot;sp_previews&quot;</span>).<span class="ident">unwrap</span>();
@@ -502,7 +546,7 @@
 <span class="doccomment">/// - **Default**</span>
 <span class="doccomment">///     - `/api/v1/map/sp/47802` - Will assume default category ID</span>
 <span class="doccomment">/// - **Specific Category**                   </span>
-<span class="doccomment">///     -`/api/v1/map/sp/47802?cat_id=40`</span>
+<span class="doccomment">///     - `/api/v1/map/sp/47802?cat_id=40`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Makes a call to the underlying [SpMap::get_sp_map_page].</span>
 <span class="doccomment">///</span>
@@ -527,7 +571,7 @@
 <span class="doccomment">///     },....]</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/map/sp/{map_id}&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_singleplayer_maps</span>(
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sp_map</span>(
     <span class="ident">map_id</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">cat_id</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">OptCatID</span><span class="op">&gt;</span>,
     <span class="ident">config</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">Config</span><span class="op">&gt;</span>,
@@ -582,7 +626,7 @@
 <span class="doccomment">/// ]</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/sp/all_banned/{map_id}&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_banned_scores_sp</span>(<span class="ident">map_id</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>, <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sp_all_banned</span>(<span class="ident">map_id</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>, <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">SpBanned::get_sp_banned</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>(), <span class="ident">map_id</span>.<span class="ident">to_string</span>()).<span class="kw">await</span>;
     <span class="kw">match</span> <span class="ident">res</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">banned_entries</span>) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">banned_entries</span>),
@@ -610,7 +654,7 @@
 <span class="doccomment">/// true</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/sp/banned/{map_id}&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">post_banned_scores_sp</span>(
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sp_banned</span>(
     <span class="ident">map_id</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">params</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">ScoreParams</span><span class="op">&gt;</span>,
     <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>,
@@ -693,7 +737,7 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/sp/history&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_sp_pbs</span>(
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sp_history</span>(
     <span class="ident">query</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">HistoryParams</span><span class="op">&gt;</span>,
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
     <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>,
@@ -768,9 +812,59 @@
 <span class="comment">//     }</span>
 <span class="comment">// }</span>
 
-<span class="doccomment">/// Receives new data to update an existing score.</span>
-<span class="attribute">#[<span class="ident">put</span>(<span class="string">&quot;/maps/sp/update&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">put_score_sp</span>(<span class="ident">params</span>: <span class="ident">web::Json</span><span class="op">&lt;</span><span class="ident">Changelog</span><span class="op">&gt;</span>, <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="comment">// TODO: Make this more ergonomic? Don&#39;t require all values.</span>
+<span class="comment">// TODO: Authentication should impact what a user can update.</span>
+<span class="comment">// TODO: Update to return all.</span>
+<span class="doccomment">/// **PUT** Method to update data for an existing singleplayer score.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Expects a JSON object as input. Best practice is to pass the current JSON [Changelog] object, and alter the fields you want changed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Parameters:</span>
+<span class="doccomment">/// - `id`</span>
+<span class="doccomment">///     - **Required** : `i64` : The ID of the changelog entry you want to update.</span>
+<span class="doccomment">/// - `timestamp`    </span>
+<span class="doccomment">///     - **Required** : `String` : `%Y-%m-%d %H:%M:%S` (use `%20` to denote a space)</span>
+<span class="doccomment">/// - `profile_number`</span>
+<span class="doccomment">///     - **Required** : `String` : Steam ID Number</span>
+<span class="doccomment">/// - `score`         </span>
+<span class="doccomment">///     - **Required** : `i32` : Current board time format         </span>
+<span class="doccomment">/// - `map_id`       </span>
+<span class="doccomment">///     - **Required** : `String` : Steam ID for the map</span>
+<span class="doccomment">/// - `banned`</span>
+<span class="doccomment">///     - **Required** : `bool` : If the score is banned.</span>
+<span class="doccomment">/// - `submission`</span>
+<span class="doccomment">///     - **Required** : `bool` : If the score is a submission.</span>
+<span class="doccomment">/// - `category_id`   </span>
+<span class="doccomment">///     - `i32` : ID for the category being played.</span>
+<span class="doccomment">/// - `demo_id`</span>
+<span class="doccomment">///     - **Optional** : `i64` : ID for the associated demo.</span>
+<span class="doccomment">/// - `youtube_id`</span>
+<span class="doccomment">///     - **Optional** : `String`: Youtube URL Extension.</span>
+<span class="doccomment">/// - `previous_id`</span>
+<span class="doccomment">///     - **Optional** : `i64` : Previous score ID for the user.</span>
+<span class="doccomment">/// - `coop_id`</span>
+<span class="doccomment">///     - **Optional** : `i64` : Coop ID for the score.</span>
+<span class="doccomment">/// - `post_rank`</span>
+<span class="doccomment">///     - **Optional** : `i32` : Rank when submitted.</span>
+<span class="doccomment">/// - `pre_rank`</span>
+<span class="doccomment">///     - **Optional** : `i32` : Previous Rank when the new score was submitted.</span>
+<span class="doccomment">/// - `note`          </span>
+<span class="doccomment">///     - **Optional** : `String` : User comment for the run.</span>
+<span class="doccomment">/// - `score_delta`</span>
+<span class="doccomment">///     - **Optional** : `i32` : Difference in score between the two entries.</span>
+<span class="doccomment">/// - `verified`</span>
+<span class="doccomment">///     - **Optional** : `bool` : If the run is verified.</span>
+<span class="doccomment">/// - `admin_note`</span>
+<span class="doccomment">///     - **Optional** : `String` : Note by admin.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Makes a call to the underlying [Changelog::update_changelog]</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">/// ```json</span>
+<span class="doccomment">/// true</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">put</span>(<span class="string">&quot;/sp/update&quot;</span>)]</span>
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sp_update</span>(<span class="ident">params</span>: <span class="ident">web::Json</span><span class="op">&lt;</span><span class="ident">Changelog</span><span class="op">&gt;</span>, <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="comment">// TODO: Handle demo uploads.</span>
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Changelog::update_changelog</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>(), <span class="ident">params</span>.<span class="number">0</span>).<span class="kw">await</span>;
     <span class="kw">match</span> <span class="ident">res</span> {
@@ -805,7 +899,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Makes a call to the underlying [check_for_valid_score]</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ##Example JSON output:</span>
+<span class="doccomment">/// ## Example JSON output:</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// {</span>
 <span class="doccomment">///     &quot;previous_id&quot;: 102347,</span>
@@ -816,7 +910,7 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/sp/validate&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_newscore_details</span>(
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sp_validate</span>(
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
     <span class="ident">data</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">ScoreLookup</span><span class="op">&gt;</span>,
     <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>,

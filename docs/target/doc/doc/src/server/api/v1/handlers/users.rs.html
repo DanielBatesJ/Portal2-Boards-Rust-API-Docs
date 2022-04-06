@@ -153,7 +153,6 @@
 <span id="151">151</span>
 <span id="152">152</span>
 <span id="153">153</span>
-<span id="154">154</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::{<span class="ident">PointsProfileWrapper</span>, <span class="ident">ProfilePage</span>, <span class="ident">Users</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::tools::cache::CacheState</span>;
 <span class="kw">use</span> <span class="ident">actix_web</span>::{<span class="ident">get</span>, <span class="ident">post</span>, <span class="ident">web</span>, <span class="ident">HttpResponse</span>, <span class="ident">Responder</span>};
@@ -163,7 +162,7 @@
 
 <span class="doccomment">/// GET the user information for a given profile_number.</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/users/{profile_number}&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_user</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>, <span class="ident">profile_number</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">users</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>, <span class="ident">profile_number</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Users::get_user</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>(), <span class="ident">profile_number</span>.<span class="ident">into_inner</span>()).<span class="kw">await</span>;
     <span class="kw">match</span> <span class="ident">res</span> {
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">user</span>)) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">user</span>),
@@ -172,9 +171,10 @@
     }
 }
 
+<span class="comment">// TODO: Change banned user endpoints</span>
 <span class="doccomment">/// GET method for the steamIDs of all banned users on the board.</span>
-<span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/banned_users&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_banned_users</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/banned_users_all&quot;</span>)]</span>
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">banned_users_all</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Users::get_banned</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>()).<span class="kw">await</span>;
     <span class="kw">match</span> <span class="ident">res</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">profile_numbers</span>) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">profile_numbers</span>),
@@ -182,12 +182,10 @@
     }
 }
 
+<span class="comment">// TODO: Update this to be a GET Mathod</span>
 <span class="doccomment">/// POST method to check the ban status of a given player.</span>
-<span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/banned_users&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">check_ban_status</span>(
-    <span class="ident">profile_number</span>: <span class="ident">web::Json</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
-) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/banned_user&quot;</span>)]</span>
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">banned_user</span>(<span class="ident">profile_number</span>: <span class="ident">web::Json</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Users::check_banned</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>(), <span class="ident">profile_number</span>.<span class="ident">into_inner</span>().<span class="ident">clone</span>()).<span class="kw">await</span>;
     <span class="kw">match</span> <span class="ident">res</span> {
         <span class="prelude-val">Ok</span>(<span class="ident">banned_bool</span>) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">banned_bool</span>),
@@ -197,7 +195,7 @@
 
 <span class="doccomment">/// POST method for adding a new user to the db.</span>
 <span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/users&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">post_new_user</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>, <span class="ident">new_user</span>: <span class="ident">web::Json</span><span class="op">&lt;</span><span class="ident">Users</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">users_add</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>, <span class="ident">new_user</span>: <span class="ident">web::Json</span><span class="op">&lt;</span><span class="ident">Users</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Users::insert_new_users</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>(), <span class="ident">new_user</span>.<span class="number">0</span>.<span class="ident">clone</span>()).<span class="kw">await</span>;
     <span class="kw">match</span> <span class="ident">res</span> {
         <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">new_user</span>.<span class="number">0</span>),
@@ -213,7 +211,7 @@
 }
 <span class="comment">// TODO: Fix the naming</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/donators&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_donators</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">donators</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">match</span> <span class="ident">Users::get_donators</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>()).<span class="kw">await</span> {
         <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">res</span>)) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">res</span>),
         <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
@@ -226,16 +224,16 @@
 
 <span class="doccomment">/// GET method for the UsersDisplay of all banned users on the board.</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/wall_of_shame&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_wall_of_shame</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">wall_of_shame</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Users::get_banned_display</span>(<span class="ident">pool</span>.<span class="ident">get_ref</span>()).<span class="kw">await</span>;
     <span class="kw">match</span> <span class="ident">res</span> {
-        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">users</span>)) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">users</span>),
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">u</span>)) =&gt; <span class="ident">HttpResponse::Ok</span>().<span class="ident">json</span>(<span class="ident">u</span>),
         <span class="kw">_</span> =&gt; <span class="ident">HttpResponse::NotFound</span>().<span class="ident">body</span>(<span class="string">&quot;Error fetching previews&quot;</span>),
     }
 }
 
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/profile/{profile_number}&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_profile</span>(
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">profile</span>(
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
     <span class="ident">profile_number</span>: <span class="ident">web::Path</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>,

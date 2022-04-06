@@ -54,6 +54,7 @@
 <span id="52">52</span>
 <span id="53">53</span>
 <span id="54">54</span>
+<span id="55">55</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">actix_web::web</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::api::v1::handlers::admin</span>::<span class="kw-2">*</span>;
@@ -70,42 +71,43 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">cfg</span>: <span class="kw-2">&amp;mut</span> <span class="ident">web::ServiceConfig</span>) {
     <span class="ident">cfg</span>.<span class="ident">service</span>(
         <span class="ident">web::scope</span>(<span class="string">&quot;/api/v1&quot;</span>)
-            .<span class="ident">service</span>(<span class="ident">get_singleplayer_maps</span>) <span class="comment">// SP</span>
-            .<span class="ident">service</span>(<span class="ident">get_singleplayer_preview</span>)
-            .<span class="ident">service</span>(<span class="ident">get_banned_scores_sp</span>)
-            .<span class="ident">service</span>(<span class="ident">post_banned_scores_sp</span>)
-            .<span class="ident">service</span>(<span class="ident">get_banned_scores_coop</span>)
-            .<span class="ident">service</span>(<span class="ident">post_banned_scores_coop</span>)
-            .<span class="ident">service</span>(<span class="ident">get_sp_pbs</span>)
-            <span class="comment">// .service(post_score_sp)</span>
-            .<span class="ident">service</span>(<span class="ident">put_score_sp</span>)
-            .<span class="ident">service</span>(<span class="ident">get_newscore_details</span>)
-            .<span class="ident">service</span>(<span class="ident">get_cooperative_maps</span>) <span class="comment">// Coop</span>
-            .<span class="ident">service</span>(<span class="ident">get_cooperative_preview</span>)
-            .<span class="ident">service</span>(<span class="ident">get_changelog</span>)
-            .<span class="ident">service</span>(<span class="ident">post_score_coop</span>)
-            .<span class="ident">service</span>(<span class="ident">check_ban_status</span>) <span class="comment">// Users</span>
-            .<span class="ident">service</span>(<span class="ident">get_user</span>)
-            .<span class="ident">service</span>(<span class="ident">get_banned_users</span>)
-            .<span class="ident">service</span>(<span class="ident">post_new_user</span>)
-            .<span class="ident">service</span>(<span class="ident">get_donators</span>)
-            .<span class="ident">service</span>(<span class="ident">get_wall_of_shame</span>)
-            .<span class="ident">service</span>(<span class="ident">get_profile</span>)
-            .<span class="ident">service</span>(<span class="ident">get_map_ids_by_chapter</span>) <span class="comment">// Chapters</span>
-            .<span class="ident">service</span>(<span class="ident">get_chapter_by_name</span>)
-            .<span class="ident">service</span>(<span class="ident">get_default_cat</span>) <span class="comment">// Maps</span>
-            .<span class="ident">service</span>(<span class="ident">get_points_sp</span>) <span class="comment">// Points</span>
-            .<span class="ident">service</span>(<span class="ident">post_points_sp</span>)
-            .<span class="ident">service</span>(<span class="ident">get_points_coop</span>)
-            .<span class="ident">service</span>(<span class="ident">post_points_coop</span>)
-            .<span class="ident">service</span>(<span class="ident">get_points_chapter</span>)
-            .<span class="ident">service</span>(<span class="ident">post_points_chapter</span>)
-            .<span class="ident">service</span>(<span class="ident">get_points_overall</span>)
-            .<span class="ident">service</span>(<span class="ident">post_points_overall</span>)
-            .<span class="ident">service</span>(<span class="ident">changelog_with_demo</span>)
-            .<span class="ident">service</span>(<span class="ident">get_admin_changelog</span>) <span class="comment">// Admin</span>
-            .<span class="ident">service</span>(<span class="ident">get_banned_stats</span>)
-            .<span class="ident">service</span>(<span class="ident">get_admin_list</span>),
+            .<span class="ident">service</span>(<span class="ident">changelog</span>)
+            .<span class="ident">service</span>(<span class="ident">changelog_add</span>)
+            .<span class="ident">service</span>(<span class="ident">sp</span>)
+            .<span class="ident">service</span>(<span class="ident">sp_map</span>)
+            .<span class="ident">service</span>(<span class="ident">sp_banned</span>)
+            .<span class="ident">service</span>(<span class="ident">sp_all_banned</span>)
+            .<span class="ident">service</span>(<span class="ident">sp_history</span>)
+            .<span class="ident">service</span>(<span class="ident">sp_update</span>)
+            .<span class="ident">service</span>(<span class="ident">sp_validate</span>)
+            .<span class="ident">service</span>(<span class="ident">coop</span>)
+            .<span class="ident">service</span>(<span class="ident">coop_map</span>)
+            .<span class="ident">service</span>(<span class="ident">coop_banned_all</span>)
+            .<span class="ident">service</span>(<span class="ident">coop_banned</span>)
+            .<span class="ident">service</span>(<span class="ident">coop_add</span>)
+            .<span class="ident">service</span>(<span class="ident">default_category</span>)
+            .<span class="ident">service</span>(<span class="ident">maps_from_chapter</span>)
+            .<span class="ident">service</span>(<span class="ident">chapter_by_name</span>)
+            .<span class="ident">service</span>(<span class="ident">users</span>)
+            .<span class="ident">service</span>(<span class="ident">users_add</span>)
+            .<span class="ident">service</span>(<span class="ident">banned_users_all</span>)
+            .<span class="ident">service</span>(<span class="ident">banned_user</span>)
+            .<span class="ident">service</span>(<span class="ident">donators</span>)
+            .<span class="ident">service</span>(<span class="ident">wall_of_shame</span>)
+            .<span class="ident">service</span>(<span class="ident">profile</span>)
+            .<span class="ident">service</span>(<span class="ident">points_sp</span>)
+            .<span class="ident">service</span>(<span class="ident">points_sp_add</span>)
+            .<span class="ident">service</span>(<span class="ident">points_coop</span>)
+            .<span class="ident">service</span>(<span class="ident">points_coop_add</span>)
+            .<span class="ident">service</span>(<span class="ident">points_chapter</span>)
+            .<span class="ident">service</span>(<span class="ident">points_chapter_add</span>)
+            .<span class="ident">service</span>(<span class="ident">points_overall</span>)
+            .<span class="ident">service</span>(<span class="ident">points_overall_add</span>)
+            .<span class="ident">service</span>(<span class="ident">demos</span>)
+            .<span class="ident">service</span>(<span class="ident">demos_changelog</span>)
+            .<span class="ident">service</span>(<span class="ident">admin_changelog</span>)
+            .<span class="ident">service</span>(<span class="ident">admin_banned_stats</span>)
+            .<span class="ident">service</span>(<span class="ident">admins_list</span>),
     );
 }
 </code></pre></div>

@@ -414,7 +414,7 @@
 <span class="doccomment">/// - `/api/v1/demos?demo_id=12651`</span>
 <span class="doccomment">///</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/demos&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_demo</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>, <span class="ident">query</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">DemoOptions</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">demos</span>(<span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>, <span class="ident">query</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">DemoOptions</span><span class="op">&gt;</span>) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
     <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">query</span>.<span class="ident">into_inner</span>();
     <span class="kw">let</span> <span class="ident">res_str</span> <span class="op">=</span> <span class="string">&quot;Could not find demo.&quot;</span>;
     <span class="kw">if</span> <span class="ident">query</span>.<span class="ident">demo_id</span>.<span class="ident">is_none</span>() <span class="op">&amp;</span> <span class="op">!</span><span class="ident">query</span>.<span class="ident">cl_id</span>.<span class="ident">is_none</span>() {
@@ -475,7 +475,7 @@
 <span class="doccomment">/// - `/api/v1/demos/changelog?timestamp=2020-08-18%2024:60:60&amp;profile_number=76561198040982247&amp;score=1763&amp;map_id=47763`</span>
 <span class="doccomment">///</span>
 <span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/demos/changelog&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">changelog_with_demo</span>(
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">demos_changelog</span>(
     <span class="kw-2">mut</span> <span class="ident">payload</span>: <span class="ident">Multipart</span>,
     <span class="ident">config</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">Config</span><span class="op">&gt;</span>,
     <span class="ident">query</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">SubmissionChangelog</span><span class="op">&gt;</span>,
@@ -709,9 +709,9 @@
             <span class="macro">bail!</span>(<span class="string">&quot;No changelog entry found to match changelog_id&quot;</span>)
         }
     } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">d_id</span>) <span class="op">=</span> <span class="ident">query</span>.<span class="ident">demo_id</span> {
-        <span class="kw">let</span> <span class="ident">demo</span> <span class="op">=</span> <span class="ident">Demos::get_demo</span>(<span class="ident">pool</span>, <span class="ident">d_id</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">demo</span>) <span class="op">=</span> <span class="ident">demo</span> {
-            <span class="kw">let</span> <span class="ident">changelog</span> <span class="op">=</span> <span class="ident">Changelog::get_changelog</span>(<span class="ident">pool</span>, <span class="ident">demo</span>.<span class="ident">cl_id</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">Demos::get_demo</span>(<span class="ident">pool</span>, <span class="ident">d_id</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">d</span>) <span class="op">=</span> <span class="ident">d</span> {
+            <span class="kw">let</span> <span class="ident">changelog</span> <span class="op">=</span> <span class="ident">Changelog::get_changelog</span>(<span class="ident">pool</span>, <span class="ident">d</span>.<span class="ident">cl_id</span>).<span class="kw">await</span><span class="question-mark">?</span>;
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">cl</span>) <span class="op">=</span> <span class="ident">changelog</span> {
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>((<span class="ident">cl</span>, <span class="ident">d_id</span>));
             } <span class="kw">else</span> {
@@ -733,9 +733,9 @@
     <span class="ident">demo_id</span>: <span class="ident">i64</span>,
 ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
     <span class="kw">let</span> (<span class="ident">client</span>, <span class="ident">auth</span>) <span class="op">=</span> <span class="ident">b2_client_and_auth</span>(<span class="kw-2">&amp;</span><span class="ident">config</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
-    <span class="kw">let</span> <span class="ident">demo</span> <span class="op">=</span> <span class="ident">Demos::get_demo</span>(<span class="ident">pool</span>, <span class="ident">demo_id</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">Demos::get_demo</span>(<span class="ident">pool</span>, <span class="ident">demo_id</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>().<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">file_name</span> <span class="op">=</span> <span class="ident">generate_file_name</span>(<span class="ident">pool</span>, <span class="ident">cl</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="kw">match</span> <span class="ident">b2_delete_file_version</span>(<span class="kw-2">&amp;</span><span class="ident">client</span>, <span class="kw-2">&amp;</span><span class="ident">auth</span>, <span class="ident">file_name</span>, <span class="ident">demo</span>.<span class="ident">file_id</span>).<span class="kw">await</span> {
+    <span class="kw">match</span> <span class="ident">b2_delete_file_version</span>(<span class="kw-2">&amp;</span><span class="ident">client</span>, <span class="kw-2">&amp;</span><span class="ident">auth</span>, <span class="ident">file_name</span>, <span class="ident">d</span>.<span class="ident">file_id</span>).<span class="kw">await</span> {
         <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
         <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; {
             <span class="macro">eprintln!</span>(<span class="string">&quot;Failed to delete file -&gt; {:#?}&quot;</span>, <span class="ident">e</span>);

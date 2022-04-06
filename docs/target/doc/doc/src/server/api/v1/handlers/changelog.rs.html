@@ -198,7 +198,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Makes a call to the underlying [ChangelogPage::get_changelog_page]</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/changelog&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_changelog</span>(
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">changelog</span>(
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
     <span class="ident">query_params</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">ChangelogQueryParams</span><span class="op">&gt;</span>,
 ) -&gt; <span class="kw">impl</span> <span class="ident">Responder</span> {
@@ -251,7 +251,7 @@
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/changelog&quot;</span>)]</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">post_changelog</span>(
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">changelog_add</span>(
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
     <span class="ident">cache</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">CacheState</span><span class="op">&gt;</span>,
     <span class="ident">config</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">Config</span><span class="op">&gt;</span>,

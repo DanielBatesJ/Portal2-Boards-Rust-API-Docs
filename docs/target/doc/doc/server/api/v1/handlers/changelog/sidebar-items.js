@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["get_changelog","GET method for changelog entiries. Utilizes `ChangelogQueryParrams` as an optional addition to the query"],["post_changelog","POST endpoint for submitting a new changelog entry. Accepts field values for a new changelog insert"]]});
+initSidebarItems({"struct":[["changelog","GET method for changelog entiries. Utilizes `ChangelogQueryParrams` as an optional addition to the query"],["changelog_add","POST endpoint for submitting a new changelog entry. Accepts field values for a new changelog insert"]]});
