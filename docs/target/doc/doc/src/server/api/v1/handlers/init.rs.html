@@ -55,6 +55,8 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">actix_web::web</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::api::v1::handlers::admin</span>::<span class="kw-2">*</span>;
@@ -85,11 +87,12 @@
             .<span class="ident">service</span>(<span class="ident">coop_banned_all</span>)
             .<span class="ident">service</span>(<span class="ident">coop_banned</span>)
             .<span class="ident">service</span>(<span class="ident">coop_add</span>)
+            .<span class="ident">service</span>(<span class="ident">maps</span>)
             .<span class="ident">service</span>(<span class="ident">default_category</span>)
             .<span class="ident">service</span>(<span class="ident">maps_from_chapter</span>)
             .<span class="ident">service</span>(<span class="ident">chapter_by_name</span>)
-            .<span class="ident">service</span>(<span class="ident">users</span>)
-            .<span class="ident">service</span>(<span class="ident">users_add</span>)
+            .<span class="ident">service</span>(<span class="ident">user</span>)
+            .<span class="ident">service</span>(<span class="ident">user_add</span>)
             .<span class="ident">service</span>(<span class="ident">banned_users_all</span>)
             .<span class="ident">service</span>(<span class="ident">banned_user</span>)
             .<span class="ident">service</span>(<span class="ident">donators</span>)
@@ -105,6 +108,7 @@
             .<span class="ident">service</span>(<span class="ident">points_overall_add</span>)
             .<span class="ident">service</span>(<span class="ident">demos</span>)
             .<span class="ident">service</span>(<span class="ident">demos_changelog</span>)
+            .<span class="ident">service</span>(<span class="ident">demos_delete</span>)
             .<span class="ident">service</span>(<span class="ident">admin_changelog</span>)
             .<span class="ident">service</span>(<span class="ident">admin_banned_stats</span>)
             .<span class="ident">service</span>(<span class="ident">admins_list</span>),

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["default_category",""]]});
+initSidebarItems({"struct":[["default_category","GET method to return the default category ID for a given map"],["maps","GET method to return all map information for a given game."]]});

@@ -112,6 +112,20 @@
 <span id="110">110</span>
 <span id="111">111</span>
 <span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">anyhow::Result</span>;
 <span class="kw">use</span> <span class="ident">sqlx::postgres::PgRow</span>;
@@ -119,6 +133,20 @@
 <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
 
 <span class="kw">impl</span> <span class="ident">Maps</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_maps</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">game_id</span>: <span class="ident">i32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Maps</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Maps</span><span class="op">&gt;</span>(
+            <span class="string">r#&quot;
+            SELECT maps.id, maps.steam_id, maps.lp_id,
+            maps.name, maps.chapter_id, maps.default_cat_id,
+            maps.is_public  FROM &quot;p2boards&quot;.maps 
+                INNER JOIN &quot;p2boards&quot;.chapters ON (maps.chapter_id = chapters.id)
+                WHERE chapters.game_id = $1;&quot;#</span>,
+        )
+        .<span class="ident">bind</span>(<span class="ident">game_id</span>)
+        .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">res</span>)
+    }
     <span class="doccomment">/// Takes in a bool, if true returns MP map_ids, if false, returns as SP map_ids</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_steam_ids</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">is_mp</span>: <span class="ident">bool</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">sqlx::query</span>(

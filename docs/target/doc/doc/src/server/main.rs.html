@@ -103,45 +103,47 @@
 <span id="101">101</span>
 <span id="102">102</span>
 <span id="103">103</span>
+<span id="104">104</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # Overview</span>
 <span class="doccomment">//! The main web-server compontent of the boards. Written in Rust, this is the primary</span>
 <span class="doccomment">//! REST API that the boards uses to interact with the database</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Navigation</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ### API</span>
+<span class="doccomment">//! ### [API](api::v1::handlers)</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The API module contains the different API versions, and the versions contain handles for the endpoints [api::v1::handlers].</span>
+<span class="doccomment">//! The [API](api::v1::handlers) module contains the different API versions, and the versions contain handles for the endpoints.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The handlers are broken up into categories that follow closely with their purpose area on the boards. Each</span>
 <span class="doccomment">//! category will contain different endpoints. Each endpoint should have usage documentation. **This is my recommendation on where to go</span>
 <span class="doccomment">//! if you&#39;re looking to use the API&#39;s endpoints for your application.**</span>
 <span class="doccomment">//!  </span>
 <span class="doccomment">//! ### Controllers</span>
-<span class="doccomment">//! The controllers source code contains the code for Database Interactions. The documentation here is virtually non-existant however, as</span>
-<span class="doccomment">//! the code is written as methods implemented on models. So view individual modules in [models::models], or check</span>
+<span class="doccomment">//! The [controllers] source code contains the code for Database Interactions. The documentation here is virtually non-existant however, as</span>
+<span class="doccomment">//! the code is written as methods implemented on models. So view individual modules in [models](models::models), or check</span>
 <span class="doccomment">//! the API documention to see what underlying calls the API endpoints make.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ### Models</span>
-<span class="doccomment">//! The models that represent the data we extract from the database, and most modules used internally in the code. These have good information</span>
+<span class="doccomment">//! The [models](models::models) that represent the data we extract from the database, and most modules used internally in the code. These have good information</span>
 <span class="doccomment">//! on high-level purpose and any implementations on those models. This is where you would go to see what db interactions exist for a given</span>
 <span class="doccomment">//! data model.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ### Tests</span>
-<span class="doccomment">//! The testing module does not contain any useful documentation, and is used for testing development.</span>
+<span class="doccomment">//! The [testing](tests) module does not contain any useful documentation, and is used for testing development.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ### Tools</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! #### Helpers</span>
-<span class="doccomment">//! Miscellaneous functions used by different portions of the code</span>
+<span class="doccomment">//! [Miscellaneous functions](tools::helpers) used by different portions of the code</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! #### Cache</span>
-<span class="doccomment">//! Caching implementations specific to the board, well documented.</span>
+<span class="doccomment">//! [Caching implementations](tools::cache) specific to the board, well documented.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! #### Config</span>
-<span class="doccomment">//! Extracts configuration information from the local .env file to be used to customize boards. Includes networking information,</span>
+<span class="doccomment">//! Extracts [configuration](tools::config) information from the local .env file to be used to customize boards. Includes networking information,</span>
 <span class="doccomment">//! proof requirements for the boards, connection information for the database and external file servers etc.</span>
 <span class="doccomment">//!</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">rustdoc::private_intra_doc_links</span>)]</span>
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
 <span class="kw">use</span> <span class="ident">actix_cors::Cors</span>;

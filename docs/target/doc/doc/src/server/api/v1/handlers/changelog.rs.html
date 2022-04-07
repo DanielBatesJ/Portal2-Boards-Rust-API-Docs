@@ -147,10 +147,6 @@
 <span id="145">145</span>
 <span id="146">146</span>
 <span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::{
     <span class="ident">Changelog</span>, <span class="ident">ChangelogInsert</span>, <span class="ident">ChangelogPage</span>, <span class="ident">ChangelogQueryParams</span>, <span class="ident">SubmissionChangelog</span>,
 };
@@ -209,30 +205,26 @@
     }
 }
 
-<span class="doccomment">/// **POST** endpoint for submitting a new changelog entry.</span>
-<span class="doccomment">/// Accepts field values for a new changelog insert</span>
-<span class="doccomment">/// ## Expects the following fields:</span>
+<span class="doccomment">/// **POST** method for submitting a new changelog entry.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// **Required Parameters**: timestamp, profile_number, score, map_id</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// **Optional Parameters**: youtube_id, note, cat_id</span>
+<span class="doccomment">/// Accepts field values for a new [ChangelogInsert]</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Parameters (expects valid JSON Object):</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// - `timestamp`    </span>
-<span class="doccomment">///     - `String`: `%Y-%m-%d %H:%M:%S` (use `%20` to denote a space)</span>
+<span class="doccomment">///     - **Required** - `String` : `%Y-%m-%d %H:%M:%S` (use `%20` to denote a space)</span>
 <span class="doccomment">/// - `profile_number`</span>
-<span class="doccomment">///     - `String`: Steam ID Number</span>
+<span class="doccomment">///     - **Required** - `String` : Steam ID Number</span>
 <span class="doccomment">/// - `score`         </span>
-<span class="doccomment">///     - `i32`: Current board time format         </span>
+<span class="doccomment">///     - **Required** - `i32` : Current board time format         </span>
 <span class="doccomment">/// - `map_id`       </span>
-<span class="doccomment">///     - `String`: Steam ID for the map</span>
+<span class="doccomment">///     - **Required** - `String` : Steam ID for the map</span>
 <span class="doccomment">/// - `youtube_id`</span>
-<span class="doccomment">///     - `String`: Youtube URL Extension.</span>
+<span class="doccomment">///     - **Optional** - `String` : Youtube URL Extension.</span>
 <span class="doccomment">/// - `note`          </span>
-<span class="doccomment">///     - `String`: Note for the run</span>
+<span class="doccomment">///     - **Optional** - `String` : Note for the run</span>
 <span class="doccomment">/// - `category_id`   </span>
-<span class="doccomment">///     - `i32`: ID for the category being played  </span>
+<span class="doccomment">///     - **Optional** - `i32` : ID for the category being submitted, will use default for the map if not supplied,</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example endpoints:       </span>
 <span class="doccomment">/// - `/api/v1/changelog`</span>

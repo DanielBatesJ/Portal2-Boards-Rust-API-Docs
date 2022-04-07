@@ -467,6 +467,7 @@
 <span id="465">465</span>
 <span id="466">466</span>
 <span id="467">467</span>
+<span id="468">468</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::{
     <span class="ident">Changelog</span>, <span class="ident">HistoryParams</span>, <span class="ident">OptCatID</span>, <span class="ident">ScoreLookup</span>, <span class="ident">ScoreParams</span>, <span class="ident">SpBanned</span>, <span class="ident">SpMap</span>, <span class="ident">SpPbHistory</span>,
     <span class="ident">SpPreviews</span>, <span class="ident">SpRanked</span>, <span class="ident">Users</span>, <span class="ident">UsersPage</span>,
@@ -490,6 +491,8 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Makes a call to the underlying [SpPreviews::get_sp_previews]</span>
 <span class="doccomment">/// **or** uses a cached value.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Example JSON output</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// [</span>
@@ -536,11 +539,9 @@
 <span class="comment">// TODO: Add game</span>
 <span class="doccomment">/// **GET** method to generate a single player map page [SpRanked] for a given map_id</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// **Optional Parameters**: `cat_id`</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// ## Parameters:</span>
 <span class="doccomment">///    - `cat_id`           </span>
-<span class="doccomment">///         - The ID of the category you want a Single Player Ranked Page for.</span>
+<span class="doccomment">///         - **Optional** - `i32` - The ID of the category you want a Single Player Ranked Page for.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example endpoint</span>
 <span class="doccomment">/// - **Default**</span>
@@ -551,6 +552,7 @@
 <span class="doccomment">/// Makes a call to the underlying [SpMap::get_sp_map_page].</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// [</span>
 <span class="doccomment">///     {</span>
@@ -613,6 +615,7 @@
 <span class="doccomment">/// Makes a call to the underlying [SpBanned::get_sp_banned]</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// [</span>
 <span class="doccomment">///     {</span>
@@ -650,6 +653,7 @@
 <span class="doccomment">/// Makes a call to the underlying [SpBanned::get_sp_banned]</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// true</span>
 <span class="doccomment">/// ```</span>
@@ -680,10 +684,6 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Query parameters represented as [HistoryParams]</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ** Required Parameters**: map_id, profile_number</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ** Optional Parameters**: cat_id</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// ## Parameters:</span>
 <span class="doccomment">///    - `profile_number`           </span>
 <span class="doccomment">///         - Required: `String`, ID for the player.</span>
@@ -701,7 +701,9 @@
 <span class="doccomment">/// Makes a call to the underlying [Users::get_user_data] &amp; [Changelog::get_sp_pb_history]</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example JSON output</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// - For a user that exists</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// {</span>
 <span class="doccomment">///     &quot;user_name&quot;: &quot;Royal&quot;,</span>
@@ -728,7 +730,9 @@
 <span class="doccomment">///             &quot;admin_note&quot;: null</span>
 <span class="doccomment">///         },..]}</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// - For a user that does not exist.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// {</span>
 <span class="doccomment">///     &quot;user_name&quot;: null,</span>
@@ -860,6 +864,7 @@
 <span class="doccomment">/// Makes a call to the underlying [Changelog::update_changelog]</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// true</span>
 <span class="doccomment">/// ```</span>
@@ -877,19 +882,15 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Query parameters represented as [ScoreLookup]</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// **Required Parameters**: profile_number, score, map_id</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// **Optional Parameters**: cat_id</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// ## Parameters:</span>
 <span class="doccomment">///    - `profile_number`           </span>
-<span class="doccomment">///         - Required: `String`, ID for the player.</span>
+<span class="doccomment">///         - **Required**: `String`, ID for the player.</span>
 <span class="doccomment">///    - `score`           </span>
-<span class="doccomment">///         - Required: `i32`, Time for the run.</span>
+<span class="doccomment">///         - **Required**: `i32`, Time for the run.</span>
 <span class="doccomment">///    - `map_id`           </span>
-<span class="doccomment">///         - Required: `String`, ID for the map.</span>
+<span class="doccomment">///         - **Required**: `String`, ID for the map.</span>
 <span class="doccomment">///    - `cat_id`           </span>
-<span class="doccomment">///         - Optional: `i32`, ID for the cateogry. If left blank, will use the default for the map.</span>
+<span class="doccomment">///         - **Optional**: `i32`, ID for the cateogry. If left blank, will use the default for the map.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example endpoints:</span>
 <span class="doccomment">///  - **With Required**           </span>
@@ -900,6 +901,7 @@
 <span class="doccomment">/// Makes a call to the underlying [check_for_valid_score]</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Example JSON output:</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// {</span>
 <span class="doccomment">///     &quot;previous_id&quot;: 102347,</span>

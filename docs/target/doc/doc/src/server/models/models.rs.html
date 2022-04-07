@@ -486,6 +486,12 @@
 <span id="484">484</span>
 <span id="485">485</span>
 <span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">chrono::NaiveDateTime</span>;
 <span class="kw">use</span> <span class="ident">sqlx::FromRow</span>;
 <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
@@ -649,6 +655,12 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Games</span> {
     <span class="kw">pub</span> <span class="ident">id</span>: <span class="ident">i32</span>,
     <span class="kw">pub</span> <span class="ident">game_name</span>: <span class="ident">String</span>,
+}
+
+<span class="doccomment">/// Query wrapper for game_id</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GameID</span> {
+    <span class="kw">pub</span> <span class="ident">game_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>,
 }
 
 <span class="doccomment">/// One-to-one struct for map data.</span>

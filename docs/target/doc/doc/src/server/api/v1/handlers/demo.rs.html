@@ -379,6 +379,8 @@
 <span id="377">377</span>
 <span id="378">378</span>
 <span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::{
     <span class="ident">Changelog</span>, <span class="ident">ChangelogInsert</span>, <span class="ident">DemoInsert</span>, <span class="ident">DemoOptions</span>, <span class="ident">Demos</span>, <span class="ident">Maps</span>, <span class="ident">SubmissionChangelog</span>,
 };
@@ -553,7 +555,7 @@
 <span class="doccomment">/// - `/api/v1/demos?cl_id=15625`</span>
 <span class="doccomment">/// - `/api/v1/demos?demo_id=12651`</span>
 <span class="attribute">#[<span class="ident">delete</span>(<span class="string">&quot;/demos&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">delete_demo</span>(
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">demos_delete</span>(
     <span class="ident">query</span>: <span class="ident">web::Query</span><span class="op">&lt;</span><span class="ident">DemoOptions</span><span class="op">&gt;</span>,
     <span class="ident">config</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">Config</span><span class="op">&gt;</span>,
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
@@ -583,7 +585,8 @@
     }
 }
 
-<span class="doccomment">/// Adds a demo and changelog insert to the database</span>
+<span class="doccomment">/// Adds a demo and changelog insert to the database.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// The debug value passed will remove the added changelog/demo entries inserted, and skip uploading the file for quicker debugging.</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">add_to_database</span>(
     <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
@@ -653,7 +656,7 @@
     <span class="prelude-val">Ok</span>((<span class="ident">client</span>, <span class="ident">auth</span>))
 }
 
-<span class="doccomment">/// Handles uploading the demo file</span>
+<span class="doccomment">/// Handles uploading the demo file.</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">upload_demo</span>(<span class="ident">config</span>: <span class="kw-2">&amp;</span><span class="ident">Config</span>, <span class="ident">file_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="comment">// Ref: https://docs.rs/raze/0.4.1/raze/api/fn.b2_authorize_account.html</span>
     <span class="kw">let</span> (<span class="ident">client</span>, <span class="ident">auth</span>) <span class="op">=</span> <span class="ident">b2_client_and_auth</span>(<span class="kw-2">&amp;</span><span class="ident">config</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
@@ -693,7 +696,8 @@
     <span class="prelude-val">Ok</span>(<span class="ident">resp1</span>.<span class="ident">file_id</span>)
 }
 
-<span class="doccomment">/// Takes in either a demo_id or a changelog_id, and returns a changelog entry and a demno_id</span>
+<span class="doccomment">/// Takes in either a demo_id or a changelog_id, and returns a changelog entry and a demno_id.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// We return a demo_id because there is a chance that there are multiple demos uploaded for the same changelog entry,</span>
 <span class="doccomment">/// and we might want to delete an older demo.</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_changelog_and_demo_id</span>(<span class="ident">query</span>: <span class="ident">DemoOptions</span>, <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Changelog</span>, <span class="ident">i64</span>)<span class="op">&gt;</span> {
