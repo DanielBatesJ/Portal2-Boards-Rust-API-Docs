@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/djbates/Documents/Rust/Portal2-Boards-Rust-API-Docs/docs/target/doc/debug/build/typenum-f652251080214f38/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Users/djbates/Documents/Rust/Portal2-Boards-Rust-API-Docs/docs/target/doc/debug/build/typenum-f652251080214f38/out/op.rs

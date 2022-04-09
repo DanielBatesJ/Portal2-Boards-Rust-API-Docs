@@ -1,6 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;api&#x2F;v1&#x2F;handlers&#x2F;changelog.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>changelog.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../../storage.js"></script><script src="../../../../../crates.js"></script><script defer src="../../../../../main.js"></script><script defer src="../../../../../source-script.js"></script><script defer src="../../../../../source-files.js"></script>
-    <noscript><link rel="stylesheet" href="../../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a class="sidebar-logo" href="../../../../../server/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../../rust-logo.png" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../../../server/index.html"><img class="rust-logo" src="../../../../../rust-logo.png" alt="logo"></a><nav class="sub"><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/api/v1/handlers/changelog.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>changelog.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../../../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../../../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../../../../storage.js"></script><script src="../../../../../crates.js"></script><script defer src="../../../../../main.js"></script><script defer src="../../../../../source-script.js"></script><script defer src="../../../../../source-files.js"></script>
+    <noscript><link rel="stylesheet" href="../../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../../../../server/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../../../../../server/index.html"><div class="logo-container"><img class="rust-logo" src="../../../../../rust-logo.svg" alt="logo"></div>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../../../../server/index.html"><img class="rust-logo" src="../../../../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -147,6 +150,32 @@
 <span id="145">145</span>
 <span id="146">146</span>
 <span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::models</span>::{
     <span class="ident">Changelog</span>, <span class="ident">ChangelogInsert</span>, <span class="ident">ChangelogPage</span>, <span class="ident">ChangelogQueryParams</span>, <span class="ident">SubmissionChangelog</span>,
 };
@@ -156,32 +185,32 @@
 <span class="kw">use</span> <span class="ident">actix_web</span>::{<span class="ident">get</span>, <span class="ident">post</span>, <span class="ident">web</span>, <span class="ident">HttpResponse</span>, <span class="ident">Responder</span>};
 <span class="kw">use</span> <span class="ident">sqlx::PgPool</span>;
 
-<span class="doccomment">/// **GET** method for changelog entiries. Utilizes `ChangelogQueryParrams` as an optional addition to the query</span>
+<span class="doccomment">/// **GET** method for changelog entiries. Utilizes [ChangelogQueryParams] as an optional addition to the query</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// **Optional Parameters**: [ChangelogQueryParams]</span>
 <span class="doccomment">/// ## Parameters:</span>
 <span class="doccomment">///    - `limit`           </span>
-<span class="doccomment">///         - The # of max returned results.</span>
+<span class="doccomment">///         - **Optional** - `i32` : The # of max returned results.</span>
 <span class="doccomment">///    - `nick_name`       </span>
-<span class="doccomment">///         - Filters for results from all profile_numbers were steam/board name matches `(%TEXT%)`.</span>
+<span class="doccomment">///         - **Optional** - `String` : Filters for results from all profile_numbers were steam/board name matches `(%TEXT%)`.</span>
 <span class="doccomment">///    - `profile_number`  </span>
-<span class="doccomment">///         - Returns scores only from a specific profile (steam) id.</span>
+<span class="doccomment">///         - **Optional** - `String` : Returns scores only from a specific profile (steam) id.</span>
 <span class="doccomment">///    - `chamber`         </span>
-<span class="doccomment">///         - Filters for only a specfic map by id.</span>
+<span class="doccomment">///         - **Optional** - `String` : Filters for only a specfic map by id.</span>
 <span class="doccomment">///    - `sp`              </span>
-<span class="doccomment">///         - Boolean for determines if sp maps should be returned</span>
+<span class="doccomment">///         - **Optional** - `bool` : Determines if sp maps should be returned</span>
 <span class="doccomment">///    - `coop`            </span>
-<span class="doccomment">///         - Boolean that determines if coop maps should be returned</span>
+<span class="doccomment">///         - **Optional** - `bool` : Ddetermines if coop maps should be returned</span>
 <span class="doccomment">///    - `wr_gain`         </span>
-<span class="doccomment">///         - Boolean that, if true, will only return scores that were originally World Records</span>
+<span class="doccomment">///         - **Optional** - `bool` : If true, will only return scores that were originally World Records</span>
 <span class="doccomment">///    - `has_demo`        </span>
-<span class="doccomment">///         - Boolean that will filter for only scores with demos</span>
+<span class="doccomment">///         - **Optional** - `bool` : Filters for only scores with demos</span>
 <span class="doccomment">///    - `yt`              </span>
-<span class="doccomment">///         - Boolean that will filter for onlny scores with youtube links</span>
+<span class="doccomment">///         - **Optional** - `bool` : Filters for onlny scores with youtube links</span>
 <span class="doccomment">///    - `first`           </span>
-<span class="doccomment">///         - Will only return scores with an ID higher than the given amount</span>
+<span class="doccomment">///         - **Optional** - `i64` : Will only return scores with an ID higher than the given amount</span>
 <span class="doccomment">///    - `last`            </span>
-<span class="doccomment">///         - Will only return scores with an ID lower than the given amount</span>
+<span class="doccomment">///         - **Optional** - `i64` : Will only return scores with an ID lower than the given amount</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// ## Example endpoints:</span>
 <span class="doccomment">///  - **Default**           </span>
 <span class="doccomment">///     - `/api/v1/changelog`</span>
@@ -193,6 +222,34 @@
 <span class="doccomment">///     - `/api/v1/changelog?limit-200&amp;last=157604`</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Makes a call to the underlying [ChangelogPage::get_changelog_page]</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ## Example JSON output</span>
+<span class="doccomment">/// ```json</span>
+<span class="doccomment">/// [</span>
+<span class="doccomment">///     {</span>
+<span class="doccomment">///         &quot;id&quot;: 99237,</span>
+<span class="doccomment">///         &quot;timestamp&quot;: &quot;2019-07-19T17:33:39&quot;,</span>
+<span class="doccomment">///         &quot;profile_number&quot;: &quot;76561198039230536&quot;,</span>
+<span class="doccomment">///         &quot;score&quot;: 2001,</span>
+<span class="doccomment">///         &quot;map_id&quot;: &quot;47759&quot;,</span>
+<span class="doccomment">///         &quot;demo_id&quot;: 5932,</span>
+<span class="doccomment">///         &quot;banned&quot;: false,</span>
+<span class="doccomment">///         &quot;youtube_id&quot;: &quot;-c0gaEXuKZA?start=0&quot;,</span>
+<span class="doccomment">///         &quot;previous_id&quot;: 99125,</span>
+<span class="doccomment">///         &quot;coop_id&quot;: null,</span>
+<span class="doccomment">///         &quot;post_rank&quot;: 1,</span>
+<span class="doccomment">///         &quot;pre_rank&quot;: 3,</span>
+<span class="doccomment">///         &quot;submission&quot;: false,</span>
+<span class="doccomment">///         &quot;note&quot;: null,</span>
+<span class="doccomment">///         &quot;category_id&quot;: 17,</span>
+<span class="doccomment">///         &quot;score_delta&quot;: -7,</span>
+<span class="doccomment">///         &quot;verified&quot;: true,</span>
+<span class="doccomment">///         &quot;admin_note&quot;: null,</span>
+<span class="doccomment">///         &quot;map_name&quot;: &quot;Laser Relays&quot;,</span>
+<span class="doccomment">///         &quot;user_name&quot;: &quot;Zypeh&quot;,</span>
+<span class="doccomment">///         &quot;avatar&quot;: &quot;https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/f9/f934276c99d0f970fdcb2d4e1229dde02d778d99_full.jpg&quot;</span>
+<span class="doccomment">///     },...]</span>
+<span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">get</span>(<span class="string">&quot;/changelog&quot;</span>)]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">changelog</span>(
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
@@ -210,7 +267,6 @@
 <span class="doccomment">/// Accepts field values for a new [ChangelogInsert]</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Parameters (expects valid JSON Object):</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// - `timestamp`    </span>
 <span class="doccomment">///     - **Required** - `String` : `%Y-%m-%d %H:%M:%S` (use `%20` to denote a space)</span>
 <span class="doccomment">/// - `profile_number`</span>
@@ -229,7 +285,7 @@
 <span class="doccomment">/// ## Example endpoints:       </span>
 <span class="doccomment">/// - `/api/v1/changelog`</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ## Example JSON String</span>
+<span class="doccomment">/// ## Example JSON Input String</span>
 <span class="doccomment">/// ```json</span>
 <span class="doccomment">/// {</span>
 <span class="doccomment">///     &quot;timestamp&quot; : &quot;2020-08-18%2024:60:60&quot;,</span>
@@ -241,7 +297,6 @@
 <span class="doccomment">///     &quot;category_id&quot; : 19,</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
 <span class="attribute">#[<span class="ident">post</span>(<span class="string">&quot;/changelog&quot;</span>)]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">changelog_add</span>(
     <span class="ident">pool</span>: <span class="ident">web::Data</span><span class="op">&lt;</span><span class="ident">PgPool</span><span class="op">&gt;</span>,
@@ -295,5 +350,5 @@
     }
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../../../" data-current-crate="server" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0 (9d1b2106e 2022-02-23)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../../../../" data-current-crate="server" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0 (7737e0b5c 2022-04-04)" ></div>
 </body></html>

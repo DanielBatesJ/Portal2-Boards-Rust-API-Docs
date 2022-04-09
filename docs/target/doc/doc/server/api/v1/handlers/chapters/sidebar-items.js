@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["chapter_by_name","GET method to return all chapters that match a specific name"],["maps_from_chapter","GET method for map_ids by chapter."]]});
+initSidebarItems({"struct":[["chapter","GET method to return all chapters that match a specific name"],["chapters_filtered","GET method to return all chapters, can filter using parameters in [ChapterQueryParams]."],["maps_from_chapter","GET method for map_ids by chapter."]]});

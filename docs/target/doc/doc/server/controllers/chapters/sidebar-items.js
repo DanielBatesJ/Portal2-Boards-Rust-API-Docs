@@ -1,1 +1,1 @@
-initSidebarItems({});
+initSidebarItems({"fn":[["build_filtered_chapter",""]]});
