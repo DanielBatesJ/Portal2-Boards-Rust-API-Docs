@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["models","Datamodels for any data formats that we’re using."]]});
+initSidebarItems({"mod":[["admin","Admin-specific models."],["changelog","Changelog-specific models."],["chapters","Chapter-related models."],["coop","Cooperative-specific models."],["demos","Demo models"],["maps","Maps-based models."],["points","Point-based models."],["sp","Singleplayer-specific models."],["users","User-related models."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"constant":[["DEFAULT_PAGE_SIZE",""]],"fn":[["get_config",""]]});

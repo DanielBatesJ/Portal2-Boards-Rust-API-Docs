@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["default_category","GET method to return the default category ID for a given map"],["maps","GET method to return all map information for a given game."]]});
+initSidebarItems({"struct":[["default_category","GET method to return the default category ID for a given map"],["map_ids","GET method to return the all steam_ids for a given game. Filters by if the map is coop or not."],["maps","GET method to return all map information for a given game."]]});

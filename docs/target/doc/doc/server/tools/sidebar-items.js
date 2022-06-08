@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["cache","Caching for endpoints Caching implementations specific to the board."],["config","Configuration module that handles extracting information from the environment for setup."],["helpers","Helper functions used accross different modules"]]});
+initSidebarItems({"mod":[["cache","Caching for endpoints Caching implementations specific to the board."],["config","Configuration module that handles extracting information from the environment for setup."],["error",""],["helpers","Helper functions used accross different modules"]]});

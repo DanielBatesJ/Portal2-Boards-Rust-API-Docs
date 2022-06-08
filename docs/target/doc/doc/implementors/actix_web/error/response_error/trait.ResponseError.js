@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["server"] = [{"text":"impl ResponseError for <a class=\"struct\" href=\"server/tools/error/struct.ServerError.html\" title=\"struct server::tools::error::ServerError\">ServerError</a>","synthetic":false,"types":["server::tools::error::ServerError"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Admin","Empty struct to allow for implementation blocks for admin specific db interactions"],["AdminLevel","Wrapper around an optional i32, for use in [actix_web::web::Query]"]]});

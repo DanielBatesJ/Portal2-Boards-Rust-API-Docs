@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ChapterQueryParams","Querying for Chapters"],["Chapters","One-to-one struct for chapter data."],["GameID","Query wrapper for game_id"],["Games","One-to-one struct for game data."],["OptIDs","Generic wrapper around an Option i32 for [actix_web::web::Query]"]]});

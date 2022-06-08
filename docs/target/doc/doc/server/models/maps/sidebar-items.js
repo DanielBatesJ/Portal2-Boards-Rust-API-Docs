@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Categories","One-to-one struct for Category data."],["CategoryRules","One-to-one struct for category rules."],["IsCoop","Handles game id and if the request is for a coop or singleplayer map."],["Maps","One-to-one struct for map data."]]});
