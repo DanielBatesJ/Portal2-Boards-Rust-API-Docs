@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["LimitQuery",""],["count_scores",""],["count_scores_by_map",""],["recap",""]]});
+initSidebarItems({"struct":[["LimitQuery",""],["count_scores","GET method to query for the number of scores per-user across all maps."],["count_scores_by_map","GET method to query for number of scores per-user on a specific map."],["recap","GET method to generate an activity recap for the boards."]]});
