@@ -4,7 +4,93 @@
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../server/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
         </a><h2 class="location"><a href="#">Module controllers</a></h2><div class="sidebar-elems"><section><div class="block"><ul><li><a href="#modules">Modules</a></li></ul></div></section><div id="sidebar-vars" data-name="controllers" data-ty="mod" data-relpath="./"></div><script defer src="./sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../server/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
-    <h1 class="fqn"><span class="in-band">Module <a href="../index.html">server</a>::<wbr><a class="mod" href="#">controllers</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../../src/server/controllers/mod.rs.html#1-18">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Module for database interactions and models.</p>
+    <h1 class="fqn"><span class="in-band">Module <a href="../index.html">server</a>::<wbr><a class="mod" href="#">controllers</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../../src/server/controllers/mod.rs.html#1-82">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Module for database interactions and models.</p>
+<h2 id="overview"><a href="#overview">Overview</a></h2>
+<p>The controllers for database interactions are implementations on associated data <a href="../models/index.html">models</a>.</p>
+<h3 id="admin"><a href="#admin">Admin</a></h3>
+<p>Admin controllers are implemented on <a href="../models/admin/struct.Admin.html" title="crate::models::admin::Admin">crate::models::admin::Admin</a>.</p>
+<h3 id="changelog"><a href="#changelog">Changelog</a></h3>
+<p>Changelog controllers are implmented on the following:</p>
+<ul>
+<li><a href="../models/changelog/struct.Changelog.html" title="crate::models::changelog::Changelog">crate::models::changelog::Changelog</a>
+<ul>
+<li>For primarily database interactions for the changelog entries.</li>
+</ul>
+</li>
+<li><a href="../models/changelog/struct.ChangelogPage.html" title="crate::models::changelog::ChangelogPage">crate::models::changelog::ChangelogPage</a>
+<ul>
+<li>For rendering changelog pages.</li>
+</ul>
+</li>
+</ul>
+<p>There are some helper methods reused among the implementations found in the changelog model itself.</p>
+<h3 id="chapters"><a href="#chapters">Chapters</a></h3>
+<p>Chapter controllers are implemented on <a href="../models/chapters/index.html" title="crate::models::chapters">crate::models::chapters</a>.</p>
+<p>There are some helper methods reused among the implementations found in the chapter model itself.</p>
+<h3 id="coop"><a href="#coop">Coop</a></h3>
+<p>Coop controllers are implemented on the following:</p>
+<ul>
+<li><a href="../models/coop/struct.CoopBundled.html" title="crate::models::coop::CoopBundled">crate::models::coop::CoopBundled</a>
+<ul>
+<li>Database interactions.</li>
+</ul>
+</li>
+<li><a href="../models/coop/struct.CoopMap.html" title="crate::models::coop::CoopMap">crate::models::coop::CoopMap</a>
+<ul>
+<li>To create a map page.</li>
+</ul>
+</li>
+<li><a href="../models/coop/struct.CoopPreview.html" title="crate::models::coop::CoopPreview">crate::models::coop::CoopPreview</a>
+<ul>
+<li>For the coop preview page on the boards.</li>
+</ul>
+</li>
+<li><a href="../models/coop/struct.CoopBanned.html" title="crate::models::coop::CoopBanned">crate::models::coop::CoopBanned</a>
+<ul>
+<li>To handle information on banned coop times.</li>
+</ul>
+</li>
+</ul>
+<h3 id="demos"><a href="#demos">Demos</a></h3>
+<p>Demo controllers are implemented on <a href="../models/demos/struct.Demos.html" title="crate::models::demos::Demos">crate::models::demos::Demos</a>.</p>
+<p>Mtrigger controllers are also defined in this file, implemented on <a href="../models/demos/struct.Mtriggers.html" title="crate::models::demos::Mtriggers">crate::models::demos::Mtriggers</a>.</p>
+<h3 id="maps"><a href="#maps">Maps</a></h3>
+<p>Map controllers are implemented on <a href="../models/maps/struct.Maps.html" title="crate::models::maps::Maps">crate::models::maps::Maps</a>.</p>
+<h3 id="single-player-sp"><a href="#single-player-sp">Single Player (sp)</a></h3>
+<p>SP controllers are implemented on the following:</p>
+<ul>
+<li><a href="../models/sp/struct.SpMap.html" title="crate::models::sp::SpMap">crate::models::sp::SpMap</a>
+<ul>
+<li>For SP Map Page generation.</li>
+</ul>
+</li>
+<li><a href="../models/sp/struct.SpPreview.html" title="crate::models::sp::SpPreview">crate::models::sp::SpPreview</a>
+<ul>
+<li>For SP Previews.</li>
+</ul>
+</li>
+<li><a href="../models/sp/struct.SpBanned.html" title="crate::models::sp::SpBanned">crate::models::sp::SpBanned</a>
+<ul>
+<li>For SP Banned data.</li>
+</ul>
+</li>
+</ul>
+<h3 id="stats"><a href="#stats">Stats</a></h3>
+<p>Controllers for deriving information for stats are implemented on the following:</p>
+<ul>
+<li><a href="../models/changelog/struct.NumScores.html" title="crate::models::changelog::NumScores">crate::models::changelog::NumScores</a>
+<ul>
+<li>For counting the number of scores overall/per-map</li>
+</ul>
+</li>
+<li><a href="../models/changelog/struct.Recap.html" title="crate::models::changelog::Recap">crate::models::changelog::Recap</a>
+<ul>
+<li>For generating recaps.</li>
+</ul>
+</li>
+</ul>
+<h3 id="users"><a href="#users">Users</a></h3>
+<p>Controllers for users are implemented on <a href="../models/users/struct.Users.html" title="crate::models::users::Users">crate::models::users::Users</a>.</p>
 </div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2>
 <div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="admin/index.html" title="server::controllers::admin mod">admin</a></div><div class="item-right docblock-short"><p>Controllers for admin-specific functions</p>
 </div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="changelog/index.html" title="server::controllers::changelog mod">changelog</a></div><div class="item-right docblock-short"><p>Controllers for changelog</p>

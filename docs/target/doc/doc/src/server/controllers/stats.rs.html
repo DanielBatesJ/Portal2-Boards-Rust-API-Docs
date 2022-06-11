@@ -141,11 +141,24 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::changelog</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::users::UsersDisplayCount</span>;
 <span class="kw">use</span> <span class="ident">sqlx::PgPool</span>;
 
 <span class="kw">impl</span> <span class="ident">NumScores</span> {
+    <span class="doccomment">/// Returns a Vec of [NumScores] for total number of valid changelog entries across the entire boards.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">most_cl_enries_overall</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">NumScores</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">NumScores</span><span class="op">&gt;</span>(<span class="string">r#&quot;SELECT COUNT(*), changelog.profile_number, COALESCE(board_name, steam_name) AS user_name, avatar
             FROM changelog INNER JOIN users ON (users.profile_number = changelog.profile_number)
@@ -155,6 +168,8 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
+    <span class="comment">// TODO: game_id/cat_id.</span>
+    <span class="doccomment">/// Returns a Vec of [NumScores] for total number of valid changelog entries for a given map.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">most_cl_entries_by_map</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">map_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -173,7 +188,9 @@
     }
 }
 
+<span class="comment">// TODO: Allow changing the day interval.</span>
 <span class="kw">impl</span> <span class="ident">Recap</span> {
+    <span class="doccomment">/// Returns a Vec of [UsersDisplayCount] to display the users with the most WRs for the given time period.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_num_wrs</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">limit</span>: <span class="ident">i32</span>,
@@ -188,6 +205,7 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
+    <span class="doccomment">/// Returns a Vec of [UsersDisplayCount] to display the users who have the most demos for the given time period.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_num_demos</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">limit</span>: <span class="ident">i32</span>,
@@ -205,6 +223,7 @@
     <span class="comment">// Note: This is left to treat SP/Coop as the same because nothing gaurentees that the score delta</span>
     <span class="comment">// for both players on a coop time will be the same, so we treat these like single entries, even if coop</span>
     <span class="comment">// entries share a score delta.</span>
+    <span class="doccomment">/// Returns a Vec of [ScoreDeltaComparison] to display the users who have the largest score deltas in a given time period.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_top_wr_diff</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">limit</span>: <span class="ident">i32</span>,
@@ -221,6 +240,7 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
+    <span class="doccomment">/// Returns a Vec of [UsersDisplayCount] to display the users who have the most changelog entries for the given time period.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_most_updates</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">limit</span>: <span class="ident">i32</span>,
@@ -235,6 +255,7 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
+    <span class="doccomment">/// Returns a Vec of [UsersDisplayCount] to display the users who have the most youtube links for the given time period.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_top_videos</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">limit</span>: <span class="ident">i32</span>,
@@ -252,6 +273,7 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
+    <span class="doccomment">/// Returns a Vec of [NumUpdatePerMap] to display the maps with the most changelog entries in a given time period.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_top_update_by_map</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">limit</span>: <span class="ident">i32</span>,
@@ -267,6 +289,8 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
+    <span class="comment">// TODO: Maybe there&#39;s a way to `join_all` this? The futures are different which could be c.</span>
+    <span class="doccomment">/// Collection method to generate a [Recap] from all of the individual fetching methods.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">collect_recap</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">limit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Recap</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">limit</span> <span class="op">=</span> <span class="ident">limit</span>.<span class="ident">unwrap_or</span>(<span class="number">5</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">Recap</span> {

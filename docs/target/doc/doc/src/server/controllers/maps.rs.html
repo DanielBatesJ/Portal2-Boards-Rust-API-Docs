@@ -108,15 +108,6 @@
 <span id="103">103</span>
 <span id="104">104</span>
 <span id="105">105</span>
-<span id="106">106</span>
-<span id="107">107</span>
-<span id="108">108</span>
-<span id="109">109</span>
-<span id="110">110</span>
-<span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
-<span id="114">114</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::chapters</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models::maps</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">sqlx::postgres::PgRow</span>;
@@ -124,12 +115,11 @@
 <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
 
 <span class="kw">impl</span> <span class="ident">Maps</span> {
+    <span class="doccomment">/// Return all [Maps] on a given `game_id`.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_maps</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">game_id</span>: <span class="ident">i32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Maps</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Maps</span><span class="op">&gt;</span>(
             <span class="string">r#&quot;
-            SELECT maps.id, maps.steam_id, maps.lp_id,
-            maps.name, maps.chapter_id, maps.default_cat_id,
-            maps.is_public  FROM maps 
+            SELECT maps.* FROM maps 
                 INNER JOIN chapters ON (maps.chapter_id = chapters.id)
                 WHERE chapters.game_id = $1;&quot;#</span>,
         )
@@ -137,7 +127,11 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
-    <span class="doccomment">/// Takes in a bool, if true returns MP map_ids, if false, returns as SP map_ids</span>
+    <span class="doccomment">/// `is_mp</span>
+    <span class="doccomment">/// - If `true`</span>
+    <span class="doccomment">///     - Returns multiplayer `map_ids`.</span>
+    <span class="doccomment">/// - If `false`</span>
+    <span class="doccomment">///     - Returns all singleplayer `map_ids`.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_steam_ids</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">is_mp</span>: <span class="ident">bool</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_scalar</span>(
             <span class="string">r#&quot;
@@ -149,27 +143,14 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
-    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_steam_ids_by_game</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">game</span>: <span class="ident">i32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
-        <span class="ident">sqlx::query_scalar</span>(
-            <span class="string">r#&quot;
-                SELECT maps.steam_id FROM maps
-                    INNER JOIN chapters ON (maps.chapter_id = chapters.id)
-                    INNER JOIN games ON (chapter.game_id = games.id)
-                    WHERE games.id = $1&quot;#</span>,
-        )
-        .<span class="ident">bind</span>(<span class="ident">game</span>)
-        .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
-        .<span class="kw">await</span>
-    }
-    <span class="doccomment">/// Returns the map name for a given steam_id.</span>
+    <span class="doccomment">/// Returns the map `name` for a given `steam_id`.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_map_name</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">map_id</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_scalar</span>(<span class="string">r#&quot;SELECT maps.name FROM maps WHERE maps.steam_id = $1&quot;#</span>)
             .<span class="ident">bind</span>(<span class="ident">map_id</span>)
             .<span class="ident">fetch_optional</span>(<span class="ident">pool</span>)
             .<span class="kw">await</span>
     }
-    <span class="doccomment">/// Returns all default cats</span>
+    <span class="doccomment">/// Returns all default categories in the game as a `HashMap` of `String` -&gt; `i32` (`map_id` -&gt; `cat_id`).</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_all_default_cats</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hm</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">i32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">HashMap::with_capacity</span>(<span class="number">108</span>);
         <span class="ident">sqlx::query</span>(<span class="string">r#&quot;SELECT steam_id, default_cat_id FROM maps&quot;#</span>)
@@ -178,7 +159,7 @@
             .<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">hm</span>)
     }
-    <span class="doccomment">/// Returns the default category for a given map.</span>
+    <span class="doccomment">/// Returns the default category for a given `map_id`.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_default_cat</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">map_id</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_scalar</span>(
             <span class="string">r#&quot;
@@ -189,7 +170,7 @@
         .<span class="ident">fetch_optional</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
-    <span class="doccomment">/// Returns chapter information for a given map_id (steam_id)</span>
+    <span class="doccomment">/// Returns a [Chapters] for a given `map_id`.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_chapter_from_map_id</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
@@ -197,16 +178,17 @@
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Chapters</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Chapters</span><span class="op">&gt;</span>(
             <span class="string">r#&quot;
-                SELECT chapters.id, chapters.chapter_name, chapters.is_multiplayer, chapters.game_id
-                FROM Chapters
-                INNER JOIN maps ON (chapters.id = maps.chapter_id)
-                WHERE maps.steam_id = $1&quot;#</span>,
+                SELECT chapters.* FROM Chapters
+                    INNER JOIN maps ON (chapters.id = maps.chapter_id)
+                    WHERE maps.steam_id = $1&quot;#</span>,
         )
         .<span class="ident">bind</span>(<span class="ident">map_id</span>)
         .<span class="ident">fetch_optional</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
-    <span class="doccomment">/// Searches for all chapter IDs that match a given search pattern.</span>
+    <span class="doccomment">/// Searches for all `chapter_id`s by a given `name` value. </span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// Designed to be as easy to work with as possible for site-searches.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_steam_id_by_name</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
@@ -222,7 +204,7 @@
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
         .<span class="kw">await</span>
     }
-    <span class="doccomment">/// Returns true if the map is publicly accessible on the Steam Leaderboards.</span>
+    <span class="doccomment">/// Returns `true` if the `map_id` is publicly accessible on the Steam Leaderboards.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_is_public_by_steam_id</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">map_id</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_scalar</span>(<span class="string">r#&quot;SELECT is_public FROM maps WHERE steam_id = $1;&quot;#</span>)

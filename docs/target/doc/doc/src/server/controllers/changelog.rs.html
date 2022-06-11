@@ -350,6 +350,13 @@
 <span id="345">345</span>
 <span id="346">346</span>
 <span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
 <span class="kw">use</span> <span class="ident">sqlx::PgPool</span>;
 <span class="kw">use</span> <span class="ident">chrono::NaiveDateTime</span>;
@@ -367,6 +374,7 @@
             .<span class="kw">await</span>
     }
     <span class="doccomment">/// Check for if a given score already exists in the database, but is banned. Used for the auto-updating from Steam leaderboards.</span>
+    <span class="doccomment">/// </span>
     <span class="doccomment">/// Returns `true` if there is a value found, `false` if no value, or returns an error.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">check_banned_scores</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">params</span>: <span class="ident">ScoreLookup</span>) -&gt; <span class="ident">std::result::Result</span><span class="op">&lt;</span><span class="ident">bool</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="comment">// We don&#39;t care about the result, we only care if there is a result.</span>
@@ -447,7 +455,7 @@
             .<span class="ident">fetch_one</span>(<span class="ident">pool</span>)
             .<span class="kw">await</span>
     }
-    <span class="doccomment">/// Updates all fields (except ID) for a given changelog entry. Returns the updated Changelog struct.</span>
+    <span class="doccomment">/// Updates all fields (except ID) for a given changelog entry. Returns the updated [Changelog].</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">update_changelog</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">update</span>: <span class="ident">Changelog</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Changelog</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Changelog</span><span class="op">&gt;</span>(<span class="string">r#&quot;UPDATE changelog 
                 SET timestamp = $1, profile_number = $2, score = $3, map_id = $4, demo_id = $5, banned = $6, 
@@ -462,7 +470,7 @@
             .<span class="ident">fetch_one</span>(<span class="ident">pool</span>)
             .<span class="kw">await</span>
     }
-    <span class="doccomment">/// Updates demo_id</span>
+    <span class="doccomment">/// Updates `demo_id` in a given changelog entry, returns the new [Changelog].</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">update_demo_id_in_changelog</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">cl_id</span>: <span class="ident">i64</span>, <span class="ident">demo_id</span>: <span class="ident">i64</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Changelog</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Changelog</span><span class="op">&gt;</span>(<span class="string">r#&quot;UPDATE changelog 
                 SET demo_id = $1 WHERE id = $2 RETURNING *;&quot;#</span>)
@@ -471,13 +479,15 @@
             .<span class="ident">fetch_one</span>(<span class="ident">pool</span>)
             .<span class="kw">await</span>
     }
+    <span class="doccomment">/// Deletes a changelog entry on the give ID.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">delete_changelog</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">cl_id</span>: <span class="ident">i64</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Changelog</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Changelog</span><span class="op">&gt;</span>(<span class="string">r#&quot;DELETE FROM changelog WHERE id = $1 RETURNING *&quot;#</span>)
             .<span class="ident">bind</span>(<span class="ident">cl_id</span>)
             .<span class="ident">fetch_one</span>(<span class="ident">pool</span>)
             .<span class="kw">await</span>
     }
-    
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+    <span class="doccomment">/// WIP: Testing Transactions in SQLX.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">transaction_insert_changelog</span>(<span class="ident">transaction</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Transaction</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">cl</span>: <span class="ident">ChangelogInsert</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Changelog</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Changelog</span><span class="op">&gt;</span>(<span class="string">r#&quot;
             INSERT INTO changelog 
@@ -493,6 +503,8 @@
             .<span class="ident">fetch_one</span>(<span class="kw-2">&amp;mut</span> <span class="kw-2">*</span><span class="ident">transaction</span>)
             .<span class="kw">await</span>
     }
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+    <span class="doccomment">/// WIP: Testing Transactions in SQLX.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">transaction_update_changelog</span>(<span class="ident">transaction</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Transaction</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">update</span>: <span class="ident">Changelog</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Changelog</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Changelog</span><span class="op">&gt;</span>(<span class="string">r#&quot;UPDATE changelog 
                 SET timestamp = $1, profile_number = $2, score = $3, map_id = $4, demo_id = $5, banned = $6, 
@@ -507,6 +519,8 @@
             .<span class="ident">fetch_one</span>(<span class="kw-2">&amp;mut</span> <span class="kw-2">*</span><span class="ident">transaction</span>)
             .<span class="kw">await</span>
     }
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+    <span class="doccomment">/// WIP: Testing Transactions in SQLX.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">transaction_delete_changelog</span>(<span class="ident">transaction</span>: <span class="kw-2">&amp;mut</span> <span class="ident">Transaction</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>, <span class="ident">cl_id</span>: <span class="ident">i64</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Changelog</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">Changelog</span><span class="op">&gt;</span>(<span class="string">r#&quot;DELETE FROM changelog WHERE id = $1 RETURNING *&quot;#</span>)
             .<span class="ident">bind</span>(<span class="ident">cl_id</span>)

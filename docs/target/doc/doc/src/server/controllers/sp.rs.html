@@ -109,12 +109,34 @@
 <span id="104">104</span>
 <span id="105">105</span>
 <span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models</span>::{<span class="ident">maps::Maps</span>, <span class="ident">sp</span>::<span class="kw-2">*</span>};
 
 <span class="kw">use</span> <span class="ident">futures::future::try_join_all</span>;
 <span class="kw">use</span> <span class="ident">sqlx::PgPool</span>;
 
 <span class="kw">impl</span> <span class="ident">SpMap</span> {
+    <span class="doccomment">/// Returns a Single Player Map Page.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### Params</span>
+    <span class="doccomment">/// - `map_id`</span>
+    <span class="doccomment">///     - The map returned.</span>
+    <span class="doccomment">/// - `limit`</span>
+    <span class="doccomment">///     - The max number of entries returned.</span>
+    <span class="doccomment">/// - `cat_id`</span>
+    <span class="doccomment">///     - The category the runs have to be from.</span>
+    <span class="doccomment">/// - `game_id`</span>
+    <span class="doccomment">///     - The game thee runs have to be from.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_sp_map_page</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">map_id</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>,
@@ -199,7 +221,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SpBanned</span> {
-    <span class="comment">// Returns all profile_numbers and scores associated with banned times on a given map</span>
+    <span class="doccomment">/// Returns all profile_numbers and scores associated with banned times on a given map</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_sp_banned</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">map_id</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SpBanned</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">SpBanned</span><span class="op">&gt;</span>(
             <span class="string">r#&quot;

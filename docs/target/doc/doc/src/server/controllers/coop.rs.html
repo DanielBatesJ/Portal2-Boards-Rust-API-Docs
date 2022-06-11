@@ -196,12 +196,25 @@
 <span id="191">191</span>
 <span id="192">192</span>
 <span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::models</span>::{<span class="ident">changelog::Changelog</span>, <span class="ident">coop</span>::<span class="kw-2">*</span>, <span class="ident">maps::Maps</span>};
 <span class="kw">use</span> <span class="ident">futures::future::try_join_all</span>;
 <span class="kw">use</span> <span class="ident">sqlx::PgPool</span>;
 <span class="kw">use</span> <span class="ident">std::collections::HashSet</span>;
 
 <span class="kw">impl</span> <span class="ident">CoopBundled</span> {
+    <span class="doccomment">/// Inserts a [CoopBundledInsert], returns the `id` if operation was successful.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">insert_coop_bundled</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">cl</span>: <span class="ident">CoopBundledInsert</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">i64</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_scalar</span>(
             <span class="string">r#&quot;
@@ -218,12 +231,16 @@
             .<span class="ident">fetch_one</span>(<span class="ident">pool</span>)
             .<span class="kw">await</span>
     }
+    <span class="doccomment">/// Grabs the temporary changelog entry for a given `map_id`. </span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// This is used for scores that have no partner so that filtering works correctly.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_temp_coop_changelog</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>, <span class="ident">map_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CoopTempUser</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">CoopTempUser</span><span class="op">&gt;</span>(<span class="string">r#&quot;SELECT id AS cl_id, profile_number FROM changelog WHERE profile_number = &#39;N/A&#39; AND map_id = $1&quot;#</span>)
             .<span class="ident">bind</span>(<span class="ident">map_id</span>)
             .<span class="ident">fetch_optional</span>(<span class="ident">pool</span>)
             .<span class="kw">await</span>
     }
+    <span class="doccomment">/// Updates the the changelog entry on the given `cl_id` with a given `coop_id`.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">update_changelog_with_coop_id</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">cl_id</span>: <span class="ident">i64</span>,
@@ -240,14 +257,23 @@
 }
 
 <span class="kw">impl</span> <span class="ident">CoopMap</span> {
+    <span class="comment">// NOTE: We don&#39;t use limit here because results need to be filtered out after we have the vector of CoopMap.</span>
+    <span class="doccomment">/// Returns a coop map page.</span>
+    <span class="doccomment">/// </span>
+    <span class="doccomment">/// ### Params</span>
+    <span class="doccomment">/// - `map_id` :</span>
+    <span class="doccomment">///     - Which map we generate the page for.</span>
+    <span class="doccomment">/// - `cat_id` :</span>
+    <span class="doccomment">///     - The category we want results for.</span>
+    <span class="doccomment">/// - `game_id` :</span>
+    <span class="doccomment">///     - The game we restrict to.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_coop_map_page</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">map_id</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">limit</span>: <span class="ident">i32</span>,
         <span class="ident">cat_id</span>: <span class="ident">i32</span>,
         <span class="ident">game_id</span>: <span class="ident">i32</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CoopMap</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">CoopMap</span><span class="op">&gt;</span>(
+        <span class="ident">sqlx::query_as</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">CoopMap</span><span class="op">&gt;</span>(
             <span class="string">r#&quot;
                 SELECT c1.timestamp, 
                     c1.score, cb.p1_is_host, c1.note AS note1, c2.note AS note2,
@@ -286,9 +312,7 @@
         .<span class="ident">bind</span>(<span class="ident">cat_id</span>)
         .<span class="ident">bind</span>(<span class="ident">game_id</span>)
         .<span class="ident">fetch_all</span>(<span class="ident">pool</span>)
-        .<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">res</span>.<span class="ident">truncate</span>(<span class="ident">limit</span> <span class="kw">as</span> <span class="ident">usize</span>);
-        <span class="prelude-val">Ok</span>(<span class="ident">res</span>)
+        .<span class="kw">await</span>
     }
 }
 
@@ -348,7 +372,7 @@
         <span class="ident">vec_final</span>.<span class="ident">truncate</span>(<span class="number">7</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">vec_final</span>)
     }
-    <span class="comment">// Collects the top 7 preview data for all Coop maps.</span>
+    <span class="doccomment">/// Collects the top 7 preview data for all Coop maps.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_coop_previews</span>(<span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CoopPreview</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">map_id_vec</span> <span class="op">=</span> <span class="ident">Maps::get_steam_ids</span>(<span class="ident">pool</span>, <span class="bool-val">true</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">futures</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">map_id_vec</span>

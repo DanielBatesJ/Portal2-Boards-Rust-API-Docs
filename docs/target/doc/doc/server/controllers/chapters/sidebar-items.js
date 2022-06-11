@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["build_filtered_chapter",""]]});
+initSidebarItems({"fn":[["build_filtered_chapter","Helper function to build out a query string based on [ChapterQueryParams] passed by the user."]]});

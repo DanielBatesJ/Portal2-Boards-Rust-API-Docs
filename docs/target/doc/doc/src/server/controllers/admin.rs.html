@@ -82,7 +82,7 @@
 <span class="kw">impl</span> <span class="ident">Admin</span> {
     <span class="doccomment">/// Returns a changelog page that filtered to information for ease of use for admins.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Uses [crate::controllers::changelog::build_filtered_changelog] to build the filtered query.</span>
+    <span class="doccomment">/// Uses [build_filtered_changelog] to build the filtered query.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_admin_page</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
         <span class="ident">params</span>: <span class="ident">ChangelogQueryParams</span>,
@@ -97,7 +97,7 @@
                 .<span class="kw">await</span><span class="question-mark">?</span>,
         ))
     }
-    <span class="doccomment">/// Returns a [crate::models::changelog::BannedTimeDetails] to display information on specific users and their problematic scores.</span>
+    <span class="doccomment">/// Returns a [BannedTimeDetails] to display information on specific users and their problematic scores.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_user_banned_time_stats</span>(
         <span class="ident">pool</span>: <span class="kw-2">&amp;</span><span class="ident">PgPool</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BannedTimeDetails</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">sqlx::Error</span><span class="op">&gt;</span> {
